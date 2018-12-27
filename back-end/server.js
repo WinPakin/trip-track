@@ -5,9 +5,12 @@ const bodyParser = require('body-parser');
 
 // Database Imports
 const mongoose = require('mongoose');
-const User = require("./models/User.js");
-const Trip = require("./models/Trip.js");
-const Expense = require("./models/Expense.js")
+// const User = require("./models/User.js");
+// const Trip = require("./models/Trip.js");
+// const Expense = require("./models/Expense.js")
+const users = require("./routes/api/users.js");
+const trips = require("./routes/api/trips.js");
+const expenses = require("./routes/api/expenses.js");
 const db_drive = require("./config/keys.js").mongoURL;
 
 
@@ -28,7 +31,12 @@ db.once('open', function() {
 });
 
 // Routes
+app.use('/api/users', users);
+app.use('/api/trips', trips);
+app.use('/api/expenses', expenses);
+const port = 5000;
 
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
 
 
