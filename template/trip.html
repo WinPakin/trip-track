@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+        .sidenav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+        }
+
+        .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        }
+
+        .sidenav a:hover {
+        color: #f1f1f1;
+        }
+
+        .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+        }
+
+    </style>
+  </head>
+  <body>
+      <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4 sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="home.html">Trip Track</a>
+                <a class="navbar-brand" href="home.html">ID:Brazil_May_2019:AZ&^65BJ</a>
+                <ul class="navbar-nav ml-auto">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About Us</a>
+                </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Side Nav  -->
+
+        <div class="sidenav mt-5">
+                <a href="#addExpense">Add Expense</a>
+                <a href="#yourPayments">Your Payments</a>
+                <a href="#yourDebt">Your Debt</a>
+                <a href="#netPayments">Net Payments</a>
+                <a href="#analytics">Analytics</a>
+                <a href="#delete">Delete</a>
+        </div>
+
+        <div class="main">
+            <div class="container mx-4">
+                <!-- Add Expense Component -->
+                <h1 class="border-bottom" id="addExpense">Add Expense</h1>
+                <form>
+                        <!-- Expense Name  -->
+                        <div class="form-group row my-2">
+                          <label for="expenseName" class="col-sm-2 col-form-label">Expense Name</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ExpenseName" placeholder="Ticket to Sao Paulo">
+                          </div>
+                        </div>
+                        <!-- Expense Amount -->
+                        <div class="form-group row">
+                          <label for="expenseAmount" class="col-sm-2 col-form-label">Expense Amount</label>
+                          <div class="col-sm-10">
+                            <input type="number" class="form-control" id="expenseAmount" placeholder="100">
+                          </div>
+                        </div>
+                        <!-- Charge Type -->
+                        <fieldset class="form-group">
+                          <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Charge Type</legend>
+                            <div class="col-sm-10">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gridRadios" id="perPerson" value="perPerson" checked>
+                                <label class="form-check-label" for="perPerson">
+                                  Per Person
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gridRadios" id="total" value="total">
+                                <label class="form-check-label" for="total">
+                                  Total
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <!-- People Involved -->
+                        <div class="form-group row">
+                          <div class="col-sm-2">People Involved</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="gridCheck1">
+                              <label class="form-check-label" for="gridCheck1">
+                                John Doe
+                              </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck2">
+                                <label class="form-check-label" for="gridCheck2">
+                                    Emily Newman
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck3">
+                                <label class="form-check-label" for="gridCheck3">
+                                    Kim Lee
+                                </label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Expense Category -->
+                        <fieldset class="form-group">
+                            <div class="row">
+                              <legend class="col-form-label col-sm-2 pt-0">Expense Category</legend>
+                              <div class="col-sm-10">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="gridRadios" id="transport" value="transport" checked>
+                                  <label class="form-check-label" for="transport">
+                                    Transportation
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="gridRadios" id="lodging" value="lodging">
+                                  <label class="form-check-label" for="lodging">
+                                    Lodging
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="food" value="food">
+                                    <label class="form-check-label" for="food">
+                                      Food
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="gridRadios" id="tours" value="tours">
+                                      <label class="form-check-label" for="tours">
+                                        Tours
+                                      </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="others" value="others">
+                                        <label class="form-check-label" for="others">
+                                          Others
+                                        </label>
+                                    </div>
+                              </div>
+                            </div>
+                          </fieldset>
+                          <!-- Submit -->
+                        <div class="form-group row">
+                          <div class="col-sm-10">
+                            <button type="submit" class="btn btn-info">Create Expense</button>
+                          </div>
+                        </div>
+                      </form>
+                      <!-- Your Payments Component -->
+                      <h1 class="border-bottom my-4" id="yourPayments">Your Payments</h1>
+                     <form class="form-inline my-2">
+                            <label class="my-1 mr-2" for="expenseFor">Your Expense for</label>
+                            <select class="custom-select" id="expenseFor">
+                              <option selected>Everyone</option>
+                              <option value="1">John Doe</option>
+                              <option value="2">Emily Newman</option>
+                              <option value="3">Kim Lee</option>
+                            </select>
+                        </form>
+                        <table class="table table-striped my-2">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Person Name</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Expense Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Mark</td>
+                                    <td>70</td>
+                                    <td>NYC Bus</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Jacob</td>
+                                    <td>70</td>
+                                    <td>NYC Bus</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Mark</td>
+                                    <td>875</td>
+                                    <td>Brazil Plane</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                    
+                     <!-- Your Debt Component -->
+                    <h1 class="border-bottom my-4" id="yourDebt">Your Debt</h1>
+                    <form class="form-inline my-2">
+                            <label class=" mr-2" for="expenseFor">Your Debt to</label>
+                            <select class="custom-select" id="expenseFor">
+                                <option selected>Everyone</option>
+                                <option value="1">John Doe</option>
+                                <option value="2">Emily Newman</option>
+                                <option value="3">Kim Lee</option>
+                            </select>
+                        </form>
+
+                        <table class="table table-striped my-2">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Person Name</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Expense Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Mark</td>
+                                    <td>20</td>
+                                    <td>Ramen</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Jacob</td>
+                                    <td>47</td>
+                                    <td>Amazon Tour</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                    <!-- Net Payment -->
+                    <h1 class="border-bottom my-4" id="netPayment">Net Payment</h1>
+                    <table class="table table-striped my-2">
+                            <thead>
+                              <tr>
+                                <th scope="col">Person Name</th>
+                                <th scope="col">Your Expense</th>
+                                <th scope="col">Your Debt</th>
+                                <th scope="col">Net Payment</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Mark</td>
+                                <td>20</td>
+                                <td>70</td>
+                                <td>-50</td>
+                              </tr>
+                              <tr>
+                                <td>Jacob</td>
+                                <td>780</td>
+                                <td>560</td>
+                                <td>220</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    <!-- Analytics -->
+                    <h1 class="border-bottom my-2" id="analytics">Analytics</h1>
+                    <p>Content will be added later</p>  
+
+
+                    <!-- Delete -->
+                    <h1 class="border-bottom my-2" id="delete">Delete</h1>
+                    <!-- Delete: Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                      DELETE
+                    </button>
+
+                    <!-- Delete: Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Trip</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Once you delete this trip, it will be gone forever!
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                            <button type="button" class="btn btn-danger">CONFIRM DELETE</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                          
+            </div>
+
+
+        </div>
+
+
+      <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 p-4 text-center sticky-footer">
+            Copyright &copy; 2018 Trip Track
+        </footer>
+    
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      </body>
+    </html>
+    
