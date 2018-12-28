@@ -41,8 +41,8 @@ router.get(
 // Input: req.body.username, req.body.password, req.body.password2
 // Access: Private
 router.post("/register", (req, res) => {
-    // TODO:
     const { errors, isValid } = validateRegisterInput(req.body);
+    
     // Check Validation
     if (!isValid) {
         return res.status(400).json(errors);
@@ -55,7 +55,8 @@ router.post("/register", (req, res) => {
     
           const newUser = new User({
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            tripnames: []
           });
     
           bcrypt.genSalt(10, (err, salt) => {
@@ -79,7 +80,6 @@ router.post("/register", (req, res) => {
 // Input: req.body.username, req.body.password, req.body.password2
 // Access: Private
 router.post("/login", (req, res) => {
-    // TODO:
     const { errors, isValid } = validateLoginInput(req.body);
 
     // Check Validation
@@ -90,7 +90,7 @@ router.post("/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
   
-    // Find user by email
+    // Find user by username
     User.findOne({ username }).then(user => {
       // Check for user
       if (!user) {

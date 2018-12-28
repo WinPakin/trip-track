@@ -6,7 +6,7 @@ const TripSchema = new Schema({
         type: String,
         required: true
     },
-    members: [{ type: Schema.Types.ObjectId, ref: 'users', required: true}]
+    members: [{ type: String, required: true}]
 });
 
 module.exports = mongoose.model('trips', TripSchema);

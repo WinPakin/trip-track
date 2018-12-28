@@ -2,12 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-
-// Database Imports
 const mongoose = require('mongoose');
-// const User = require("./models/User.js");
-// const Trip = require("./models/Trip.js");
-// const Expense = require("./models/Expense.js")
 const users = require("./routes/api/users.js");
 const trips = require("./routes/api/trips.js");
 const expenses = require("./routes/api/expenses.js");
