@@ -1,7 +1,7 @@
 // Routing Imports
 const express = require('express');
 const bodyParser = require('body-parser');
-// const passport = require('passport');
+const passport = require('passport');
 
 // Database Imports
 const mongoose = require('mongoose');
@@ -29,6 +29,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("MongoDB Connected!");
 });
+
+
+// Config Passport Authentification Middleware
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 // Routes
 app.use('/api/users', users);
