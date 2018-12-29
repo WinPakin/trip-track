@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
-// This path is used for authentification
-// Register
-// Login
+const passport = require('passport');
+const Expense = require('../../models/Expense');
+const validateAddExpenseInput = require("../../validation/val_add-expense.js");
 
 // Route: api/expenses/test
-router.get("/test", (err,res) => {
+router.get("/test", (req, res) => {
     res.json({msg: "expenses route works"})
 });
 
@@ -20,18 +19,49 @@ router.get("/test", (err,res) => {
 //   3) Add Expense.
 // Input: req.body =
 //      {
-//      tripname: "5c236e8435163e19b8eda2bd",
-//      charger: "5c235a7f0aac8414be9f86fe",
+//      tripname: "china:b3y4ufgckd",
 //      chargeAmount: 50,
 //      chargeType: "perPerson",
-//      chargedPersons: ["5c23610dd01", "716393"],
+//      chargedPersons: emily&joe, # & is the divider
 //      category: "food",
-//      ExpenseName: "Ramen"
+//      expenseName: "Ramen"
 //      }
 // Output: {success:true}
 // Access: Private
-router.post("/add-expense", (err, res) => {
+router.post("/add-expense", passport.authenticate('jwt', { session: false }), (req, res) => {
     // TODO:
+    const { errors, isValid } = validateAddExpenseInput(req.body);
+    if(!isValid){
+        res.status(400).json(errors);
+    }
+
+    chargedList = req.body.chargedPersons.split('&');
+    var chargeAmount;
+    if(req.body.chargeType == "perPerson"){
+        console.log("perPerson");
+        chargeAmount = req.body.chargeAmount;
+    }else{
+        console.log("divided");
+        chargeAmount = req.body.chargeAmount / chargedList.length;
+        console.log(chargeAmount);
+    }
+    // charges everyone in chargedList
+    for(var i = 0; i < chargedList.length; i ++){
+        var newExpense = new Expense(
+            {
+            tripname: req.body.tripname,
+            chargeAmount: chargeAmount,
+            chargedPerson: chargedList[i],
+            category: req.body.category,
+            expenseName: req.body.expenseName,
+            charger: req.user.username
+            });
+            newExpense.save()
+                      .catch(err => {console.log(err);});
+    }
+    res.json({success:true});
+ 
+    
 });
 
 // Route: api/expenses/expense-for
@@ -41,7 +71,7 @@ router.post("/add-expense", (err, res) => {
 // Input: req.body.other-entity, req.body.tripname
 // Output: ex) {personName:"Mark", amount:50, expenseName:"bus"}
 // Access: Private
-router.post("/expense-for", (err, res) => {
+router.post("/expense-for", (req, res) => {
     // TODO:
 });
 
@@ -52,7 +82,7 @@ router.post("/expense-for", (err, res) => {
 // Input: req.body.other-entity, req.body.tripname
 // Output: ex)  {personName:"Mark", amount:50, expenseName:"bus"}
 // Access: Private
-router.post("/debt-to", (err, res) => {
+router.post("/debt-to", (req, res) => {
     // TODO:
 });
 
@@ -63,7 +93,7 @@ router.post("/debt-to", (err, res) => {
 // Input: req.body.tripname
 // Output: ex) {net-payments:[{personName:"Mark", yourExpense:450, yourDebt: 300, netPayment: 150}]}
 // Access: Private
-router.post("/net-payment", (err, res) => {
+router.post("/net-payment", (req, res) => {
     // TODO:
 });
 
@@ -74,7 +104,7 @@ router.post("/net-payment", (err, res) => {
 // Input: req.body.tripname
 // Output: ex) {transport:40, lodging:250, food:300, tours:450, others:30}
 // Access: Private
-router.post("/analytics", (err, res) => {
+router.post("/analytics", (req, res) => {
     // TODO:
 });
 

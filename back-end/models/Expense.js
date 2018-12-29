@@ -3,23 +3,20 @@ const Schema = mongoose.Schema;
 
 const ExpenseSchema = new Schema({
     tripname: {
-        type: Schema.Types.ObjectId,
-        ref: 'trips',
+        type: String,
         required: true
     },
     charger: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-        required: true,
+        type: String,
+        required: true
     },
     chargeAmount: {
         type: Number,
-        required: true,
+        required: true
     },
     chargedPerson: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-        required: true,
+        type: String,
+        required: true
     },
     category: {
         type: String,
