@@ -6,7 +6,7 @@ const validateAddExpenseInput = require("../../validation/val_add-expense.js");
 
 // Route: api/expenses/test
 router.get("/test", (req, res) => {
-    res.json({msg: "expenses route works"})
+    res.json([{msg: "expenses route works"},{msg: 'lol'}]);
 });
 
 // Route: api/expenses/add-expense
@@ -29,7 +29,6 @@ router.get("/test", (req, res) => {
 // Output: {success:true}
 // Access: Private
 router.post("/add-expense", passport.authenticate('jwt', { session: false }), (req, res) => {
-    // TODO:
     const { errors, isValid } = validateAddExpenseInput(req.body);
     if(!isValid){
         res.status(400).json(errors);
@@ -67,24 +66,66 @@ router.post("/add-expense", passport.authenticate('jwt', { session: false }), (r
 // Route: api/expenses/expense-for
 // Description: 
 //   1) Check Authentification.
-//   2) user's expense for the "other-entity". 
-// Input: req.body.other-entity, req.body.tripname
+//   2) user's expense for the "otherEntity". 
+// Input: req.body.otherEntity, req.body.tripname
 // Output: ex) {personName:"Mark", amount:50, expenseName:"bus"}
 // Access: Private
-router.post("/expense-for", (req, res) => {
-    // TODO:
+router.post("/expense-for", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.body.otherEntity == "everyone"){
+        Expense.find({charger:req.user.username, tripname:req.body.tripname})
+        .then(expenses => {
+            res.json(expenses.map( x => {return {personName: x.chargedPerson, 
+                                         amount: x.chargeAmount, 
+                                         expenseName: x.expenseName}
+                                        }));
+        }).catch(err => console.log(err));     
+    }else{
+        Expense.find({chargedPerson:req.body.otherEntity, charger:req.user.username, tripname:req.body.tripname})
+        .then(expenses => {
+            res.json(expenses.map( x => {return {personName: x.chargedPerson, 
+                                         amount: x.chargeAmount, 
+                                         expenseName: x.expenseName}
+                                        }));
+        }).catch(err => console.log(err));
+    }
+
+
 });
 
 // Route: api/expenses/debt-to
 // Description: 
 //   1) Check Authentification.
 //   2) user's debt to the "other-entity". 
-// Input: req.body.other-entity, req.body.tripname
+// Input: req.body.otherEntity, req.body.tripname
 // Output: ex)  {personName:"Mark", amount:50, expenseName:"bus"}
 // Access: Private
-router.post("/debt-to", (req, res) => {
-    // TODO:
+router.post("/debt-to", passport.authenticate('jwt', { session: false }) ,(req, res) => {
+    if(req.body.otherEntity == "everyone"){
+        Expense.find({chargedPerson:req.user.username, tripname:req.body.tripname})
+        .then(expenses => {
+            res.json(expenses.map( x => {return {personName: x.charger, 
+                                         amount: x.chargeAmount, 
+                                         expenseName: x.expenseName}
+                                        }));
+        }).catch(err => console.log(err));
+    }else{
+        Expense.find({chargedPerson:req.user.username, charger:req.body.otherEntity, tripname:req.body.tripname})
+        .then(expenses => {
+            res.json(expenses.map( x => {return {personName: x.charger, 
+                                         amount: x.chargeAmount, 
+                                         expenseName: x.expenseName}
+                                        }));
+        }).catch(err => console.log(err));
+    }
+
+
 });
+
+
+
+
+
+
 
 // Route: api/expenses/net-payment
 // Description: 
