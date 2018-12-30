@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const Lodash = require('lodash');
 const Expense = require('../../models/Expense');
+const Trip = require('../../models/Trip');
 const validateAddExpenseInput = require("../../validation/val_add-expense.js");
 
 // Route: api/expenses/test
@@ -122,20 +124,56 @@ router.post("/debt-to", passport.authenticate('jwt', { session: false }) ,(req, 
 });
 
 
-
-
-
-
-
 // Route: api/expenses/net-payment
 // Description: 
 //   1) Check Authentification.
 //   2) user's net-payments between other users.
 // Input: req.body.tripname
-// Output: ex) {net-payments:[{personName:"Mark", yourExpense:450, yourDebt: 300, netPayment: 150}]}
+// Output: ex) [{personName:"Mark", yourExpense:450, yourDebt: 300, netPayment: 150}]
 // Access: Private
-router.post("/net-payment", (req, res) => {
+router.post("/net-payment", passport.authenticate('jwt', { session: false }), (req, res) => {
     // TODO:
+    // get all expenses where user is the charger
+    // object.asign
+    // Object.fromEntries
+    // async await
+
+    Trip.findOne({tripname:req.body.tripname})
+        .then( trip => {
+            async function calcLogic() {
+                // init nested list
+                console.log(trip.members);
+                var netPaymentLst = trip.members.map(x => {return [x,{personName:x, yourExpense:0, yourDebt: 0, netPayment:0}];})
+                console.log(netPaymentLst);
+                // dict with: person name as key
+                var netPaymentDic = Lodash.fromPairs(netPaymentLst);
+                               
+                // // Expenses where the user is the charger.
+                var userIsCharger = await Expense.find({charger:req.user.username, tripname:req.body.tripname}).exec();
+
+                for(var i = 0; i < userIsCharger.length; i ++){
+                    var ex = userIsCharger[i];
+                    var ex_chargedPerson = ex.chargedPerson;
+                    netPaymentDic[ex_chargedPerson].yourExpense += ex.chargeAmount;
+                    netPaymentDic[ex_chargedPerson].netPayment += ex.chargeAmount;
+                }
+                // Expenses where the user is charged. 
+                var userIsCharged = await Expense.find({chargedPerson:req.user.username, tripname:req.body.tripname}).exec();
+                for(var i = 0; i < userIsCharged.length; i ++){
+                    var ex = userIsCharged[i];
+                    var ex_charger = ex.charger;
+                    netPaymentDic[ex_charger].yourDebt += ex.chargeAmount;
+                    netPaymentDic[ex_charger].netPayment -= ex.chargeAmount;
+                }
+                res.json(Object.values(netPaymentDic));
+
+            }
+            calcLogic();
+      
+        })
+        .catch(err => {console.log(err);});
+
+    
 });
 
 // Route: api/expenses/analytics
@@ -145,8 +183,34 @@ router.post("/net-payment", (req, res) => {
 // Input: req.body.tripname
 // Output: ex) {transport:40, lodging:250, food:300, tours:450, others:30}
 // Access: Private
-router.post("/analytics", (req, res) => {
+router.post("/analytics", passport.authenticate('jwt', { session: false }), (req, res) => {
     // TODO:
+    Expense.find({chargedPerson:req.user.username, tripname:req.body.tripname})
+           .then(expenses =>{
+            //    res.json(expenses);
+                var groups = {transport:0, lodging:0, food:0, tours:0, others:0};
+                for(var i = 0; i < expenses.length; i ++){
+                    switch(expenses[i].category){
+                        case "transport":
+                            groups.transport += expenses[i].chargeAmount;
+                            break;
+                        case "lodging":
+                            groups.lodging += expenses[i].chargeAmount;
+                            break;
+                        case "food":
+                            groups.food += expenses[i].chargeAmount;
+                            break;
+                        case "tours":
+                            groups.tours += expenses[i].chargeAmount;
+                            break;
+                        default:
+                            groups.others += expenses[i].chargeAmount;
+                            break;
+
+                    }
+                }
+                res.json(groups);
+           }).catch( err => { return console.log(err);});
 });
 
 
