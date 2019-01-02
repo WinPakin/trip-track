@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
+import Home from './components/home/index';
+import Dashboard from './components/dashboard/index';
+import Trip from './components/trip/index';
+import Footer from './components/common/footer'
 
 class App extends Component {
   render() {
     return (
-      <div>
-            <h1>Hello World?
-            </h1>
-            <div class="alert alert-primary" role="alert">
-            A simple primary alert—check it out!
-          </div>
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-      </div>
+      <Router>
+            <div>              
+              <Route exact path="/" component={Home} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/trip" component={Trip} />
+              <Footer/>
+            </div>
+
+          
+      </Router>
+
+
+
+
 
     );
   }
