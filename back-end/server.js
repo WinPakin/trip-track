@@ -7,6 +7,7 @@ const users = require("./routes/api/users.js");
 const trips = require("./routes/api/trips.js");
 const expenses = require("./routes/api/expenses.js");
 const db_drive = require("./config/keys.js").mongoURL;
+const cors = require('cors')
 
 
 
@@ -14,6 +15,7 @@ const app = express();
 
 // Parse Request
 // Parsed Aviable at req.body
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

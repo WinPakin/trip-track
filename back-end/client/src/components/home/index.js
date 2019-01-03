@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -36,8 +37,15 @@ export default class index extends Component {
           }
           
           handleSubmitLogin(event) {
-            alert('Login was submitted: ' + JSON.stringify(this.state));
+            // alert('Login was submitted: ' + JSON.stringify(this.state));
+            axios.get('http://localhost:5000/api/users/test',this.state).then( res => {
+                console.log(res);
+            }).catch(err => {console.log(err)});
+            
+            
             event.preventDefault();
+
+
           }
 
 

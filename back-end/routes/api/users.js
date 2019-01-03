@@ -15,6 +15,7 @@ const validateLoginInput = require('../../validation/val_login');
 
 // Route: GET api/users/test
 router.get("/test", (err,res) => {
+  console.log("reached tested");
     res.json({msg: "user route works"});
 });
 
