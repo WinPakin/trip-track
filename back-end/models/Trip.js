@@ -6,6 +6,10 @@ const TripSchema = new Schema({
         type: String,
         required: true
     },
+    tripDesc: {
+        type: String,
+        required: true
+    },
     members: [{ type: String, required: true}]
 });
 

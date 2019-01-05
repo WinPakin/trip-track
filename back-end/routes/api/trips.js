@@ -19,13 +19,15 @@ router.get("/test", (err,res) => {
 //      c) tripname starts with a letter. 
 //   2) Create new trip name by appending random number.
 //   3) Add trip
-// Input: {tripname:"brazil2019"}
+// Input: {tripname:"brazil2019", tripDesc: "blah..."}
 // Output: {success:true}
 // Access: Private
 router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
     // TODO:
     const { errors, isValid } = validateAddTripInput(req.body);
     // Check Validation
+    console.log("Add Trip");
+    console.log(errors);
     if (!isValid) {
         return res.status(400).json(errors);
     }
@@ -35,6 +37,7 @@ router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req,
     
     const newTrip = new Trip({
         tripname: new_tripname,
+        tripDesc: req.body.tripDesc,
         members: [req.user.username]
     });    
     newTrip.save()
