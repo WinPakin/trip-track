@@ -1,21 +1,37 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component } from 'react'
 import AddTrip from "./addTrip";
 import JoinTrip from "./joinTrip";
 import TripList from "./tripList";
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+import {Link} from "react-router-dom";
 
 
-export default function index() {
-  return (
-    <div>
+
+class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+    handleLogout(event) {
+      event.preventDefault();
+      this.props.logoutUser();
+    }
+
+  render() {
+    return (
+<   div>
       {/* Nav Bar */}
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4 sticky-top">
               <div className="container">
-                  <a className="navbar-brand" href="home.html">Trip Track</a>
+                <Link className="navbar-brand"  to="/">Trip Track</Link>
               
                   <ul className="navbar-nav ml-auto">
                   <li className="nav-item">
-                      <a className="nav-link" href="about.html">About Us</a>
+                      <a className="nav-link" onClick={this.handleLogout}>Log Out</a>
                   </li>
                   </ul>
               </div>
@@ -31,8 +47,15 @@ export default function index() {
           {/* List Trips */}
           <TripList/>
         </div>
-
-
     </div>
-  )
+    )
+  }
 }
+
+Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired
+};
+
+
+
+export default connect(null, { logoutUser })(withRouter(Dashboard));

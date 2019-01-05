@@ -54,6 +54,13 @@ router.post("/register", (req, res) => {
           errors.username = 'Username already exists';
           return res.status(400).json(errors);
         } else {
+
+          const originalInput = {
+            username: req.body.username,
+            password: req.body.password,
+            password2: req.body.password2
+
+          };
     
           const newUser = new User({
             username: req.body.username,
@@ -67,7 +74,7 @@ router.post("/register", (req, res) => {
               newUser.password = hash;
               newUser
                 .save()
-                .then(user => res.json(user))
+                .then(() => res.json(originalInput))
                 .catch(err => console.log(err));
             });
           });
