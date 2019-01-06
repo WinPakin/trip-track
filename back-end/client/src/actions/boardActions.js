@@ -1,15 +1,19 @@
 import axios from 'axios';
-import { GET_ERRORS, CLEAR_ERRORS, LIST_TRIP } from './types';
+import { GET_ERRORS, CLEAR_ERRORS, LIST_TRIP, TRIP_LIST_LOADING } from './types';
 
 //Add Trip
 // Input: tripname, tripDesc
 export const addTrip = tripItem => dispatch => {
     axios
         .post('http://localhost:5000/api/trips/add-trip',tripItem)
-        .then( () => {
+        .then( res => {
             alert("Success: Your trip has been added.");
             dispatch({
                 type: CLEAR_ERRORS
+            });
+            dispatch({
+                type: LIST_TRIP,
+                payload: res.data.tripList
             });
         })
         .catch(err =>
@@ -25,8 +29,16 @@ export const addTrip = tripItem => dispatch => {
 export const joinTrip = tripName => dispatch => {
     axios
         .post('http://localhost:5000/api/trips/join-trip',tripName)
-        .then( () => {
-            alert("Success: You have joinded the trip.");})
+        .then( res => {
+            alert("Success: You have joinded the trip.");
+            dispatch({
+                type: CLEAR_ERRORS
+            });
+            dispatch({
+                type: LIST_TRIP,
+                payload: res.data.tripList
+            });
+        })   
         .catch(err =>
             dispatch({
               type: GET_ERRORS,
@@ -36,3 +48,35 @@ export const joinTrip = tripName => dispatch => {
 };
 
 //List Trip
+export const listTripAction = () => dispatch => {
+    dispatch(setTripListLoading());
+    axios
+        .post('http://localhost:5000/api/trips/trips-list',null)
+        .then( res => {
+            dispatch({
+                type: LIST_TRIP,
+                payload: res.data.tripList
+            });
+        })   
+        .catch(err => {console.log(err);});
+};
+
+//Delete Trip
+export const deleteTripAction = (deleteItem) => dispatch => {
+    axios
+        .post('http://localhost:5000/api/trips/delete-trip', deleteItem)
+        .then( res => {
+            dispatch({
+                type: LIST_TRIP,
+                payload: res.data.tripList
+            });
+        })   
+        .catch(err => {console.log(err);});
+};
+
+// Set loading trip list
+export const setTripListLoading = () => {
+    return {
+      type: TRIP_LIST_LOADING
+    };
+  };

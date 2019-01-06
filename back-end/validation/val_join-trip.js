@@ -7,7 +7,7 @@ module.exports = function validateJoinTripInput(data) {
   data.tripname = !isEmpty(data.tripname) ? data.tripname : '';
 
   if (Validator.isEmpty(data.tripname)) {
-    errors.tripname = 'Tripname field is required';
+    errors.tripID = 'Trip ID field is required';
   }
 
   return {

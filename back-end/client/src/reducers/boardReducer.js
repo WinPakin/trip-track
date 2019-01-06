@@ -1,4 +1,4 @@
-import { ADD_TRIP, JOIN_TRIP, LIST_TRIP } from '../actions/types';
+import { LIST_TRIP, TRIP_LIST_LOADING } from '../actions/types';
 
 const initialState = {
     trip_list: []
@@ -9,8 +9,14 @@ export default function(state = initialState, action){
         case LIST_TRIP:
             return {
                 ...state,
-                trip_list: action.payload
+                trip_list: action.payload,
+                loading: false
             };
+        case TRIP_LIST_LOADING:
+            return {
+                ...state,
+                loading:true
+            }
         default:
             return state;
     }

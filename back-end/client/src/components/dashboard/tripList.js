@@ -1,14 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { listTripAction } from '../../actions/boardActions';
+import DeleteTrip from './deleteTrip';
 
-export default class tripList extends Component {
+class tripList extends Component {
         constructor(props) {
                 super(props);
-                this.state = {tripList: [
-                        {name:"Brazil_May_2019:AZ&^65BJ", desc:"Spring break trip to Sao Paulo with friends."},
-                        {name:"China_May_2019:AZ&^65BJ", desc:"Fall break trip to Sao Paulo with friends."},
-                        {name:"Argen_May_2019:AZ&^65BJ", desc:"Winter break trip to Sao Paulo with friends."}
-        ]};
+                this.state = {tripList: [],
+                              loading: false
+                };
         }
+
+        componentWillReceiveProps(nextProps) {        
+                this.setState({ tripList: nextProps.trip_list,
+                                loading: nextProps.loading                          
+                });
+        }
+
+        componentDidMount() {
+                this.props.listTripAction();
+              }
 
   render() {
     const TripInfo = this.state.tripList;
@@ -16,25 +29,49 @@ export default class tripList extends Component {
         <div className="col-sm-4 py-1" key={JSON.stringify(x)}>
                 <div className="card">
                         <div className="card-body">
-                        <h5 className="card-title">{x.name}</h5>
-                        <p className="card-text">{x.desc}</p>
-                        <a href="#" className="btn btn-info">Explore</a>
+                        <h5 className="card-title">{x}</h5>
+                        <div className="d-inline">
+                                <a href="#" className="btn btn-info">Explore</a>
+                        </div>
+                        <div className="d-inline">
+                                <DeleteTrip tripID={x}/>
+                        </div>  
                         </div>
                 </div>
         </div>
     );
+    const TripListComponent = (<div className="row py-2">
+                                {infoItems}
+                                </div>);
+    const Spinner = (<div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                     </div>);   
+    var Lst;           
+    if(this.state.loading){
+        Lst = Spinner;
+    }else{
+        Lst = TripListComponent; 
+    }                           
 
     return (
         <div>
         <h1 className="border-bottom">Your Trips</h1>
-        <div className="row py-2">
-            {infoItems}
-        </div>
+                {Lst}
     </div>
     )
   }
 }
 
+tripList.propTypes = {
+        listTripAction: PropTypes.func.isRequired
+      };
+      
+      const mapStateToProps = state => ({
+        trip_list: state.board.trip_list,
+        loading: state.board.loading
+      });
+      
+      export default connect(mapStateToProps, { listTripAction })(withRouter(tripList));
 
 
 

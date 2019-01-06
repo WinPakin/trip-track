@@ -23,7 +23,6 @@ router.get("/test", (err,res) => {
 // Output: {success:true}
 // Access: Private
 router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
-    // TODO:
     const { errors, isValid } = validateAddTripInput(req.body);
     // Check Validation
     console.log("Add Trip");
@@ -47,7 +46,9 @@ router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req,
                 .then( user => {
                     user.tripnames.push(trip.tripname);
                     user.save()
-                        .then(res.json({success: true}));
+                        .then( () => {
+                            tripListForUser(req.user.username, res);
+                        });
                 })
                }
                )
@@ -66,7 +67,6 @@ router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req,
 // Output: {success:true}
 // Access: Private
 router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
-    // TODO:
     const { errors, isValid } = validateJoinTripInput(req.body);
     // Check Validation
     if (!isValid) {
@@ -79,7 +79,7 @@ router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req
         // Join
         if(trip){
             if(trip.members.includes(req.user.username)){
-                errors.tripname = "You are already a member of this trip"
+                errors.tripID = "You are already a member of this trip"
                 return res.status(400).json(errors);
             }else{
                 trip.members.push(req.user.username);
@@ -89,7 +89,9 @@ router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req
                         .then( user => {
                             user.tripnames.push(trip.tripname);
                             user.save()
-                                .then(res.json({success: true}));
+                                .then( () => {
+                                    tripListForUser(req.user.username, res);
+                                });
                         })
                        })
                     .catch(err => console.log(err));
@@ -104,6 +106,20 @@ router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req
 
 
 
+// Helper Function to return triplist
+const tripListForUser = (username,res) => {
+    User.findOne({username:username})
+    .then( user => {
+        res.json({tripList: user.tripnames});
+    }
+    ).catch( err => {console.log(err)}); 
+};
+
+
+
+
+
+
 // Route: api/trips/trips-list
 // Description: 
 //   1) Check Authentification.
@@ -112,21 +128,16 @@ router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req
 // Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/trips-list", passport.authenticate('jwt', { session: false }), (req, res) => {
-    // TODO:
-    User.findOne({username:req.user.username})
-        .then( user => {
-            res.json({tripList: user.tripnames});
-        }
-        ).catch( err => {console.log(err)}); 
+    tripListForUser(req.user.username, res);
 });
 
 // Route: api/trips/delete-trip
 // Description: 
-// Input: {tripname:"brazil2019:8708765"}
+// Input: {tripname:"china:8jg7v25nv5"}
 // Output: {success:true}
 // Access: Private
-router.delete("/delete-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
-    // TODO:
+router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log(req.body.tripname);
     Trip.findOne({tripname:req.body.tripname})
         .then( trip => {
             trip.members.splice(trip.members.indexOf(req.user.username), 1);
@@ -136,8 +147,8 @@ router.delete("/delete-trip", passport.authenticate('jwt', { session: false }), 
                     .then( user => {
                         user.tripnames.splice(user.tripnames.indexOf(req.body.tripname),1);
                         user.save()
-                            .then( user => {
-                                return res.json({success: true});
+                            .then( () => {
+                                tripListForUser(req.user.username, res);;
                             } 
                             )       
                     }
