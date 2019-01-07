@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, CLEAR_ERRORS, LIST_TRIP, TRIP_LIST_LOADING } from './types';
+import { GET_ERRORS, CLEAR_ERRORS, GET_LIST_TRIP, GET_TRIP_LIST_LOADING } from './types';
 
 //Add Trip
 // Input: tripname, tripDesc
@@ -12,7 +12,7 @@ export const addTrip = tripItem => dispatch => {
                 type: CLEAR_ERRORS
             });
             dispatch({
-                type: LIST_TRIP,
+                type: GET_LIST_TRIP,
                 payload: res.data.tripList
             });
         })
@@ -35,7 +35,7 @@ export const joinTrip = tripName => dispatch => {
                 type: CLEAR_ERRORS
             });
             dispatch({
-                type: LIST_TRIP,
+                type: GET_LIST_TRIP,
                 payload: res.data.tripList
             });
         })   
@@ -54,7 +54,7 @@ export const listTripAction = () => dispatch => {
         .post('http://localhost:5000/api/trips/trips-list',null)
         .then( res => {
             dispatch({
-                type: LIST_TRIP,
+                type: GET_LIST_TRIP,
                 payload: res.data.tripList
             });
         })   
@@ -67,7 +67,7 @@ export const deleteTripAction = (deleteItem) => dispatch => {
         .post('http://localhost:5000/api/trips/delete-trip', deleteItem)
         .then( res => {
             dispatch({
-                type: LIST_TRIP,
+                type: GET_LIST_TRIP,
                 payload: res.data.tripList
             });
         })   
@@ -77,6 +77,6 @@ export const deleteTripAction = (deleteItem) => dispatch => {
 // Set loading trip list
 export const setTripListLoading = () => {
     return {
-      type: TRIP_LIST_LOADING
+      type: GET_TRIP_LIST_LOADING
     };
   };

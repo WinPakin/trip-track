@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { listTripAction } from '../../actions/boardActions';
 import DeleteTrip from './deleteTrip';
+import ExploreTrip from './explore';
 
 class tripList extends Component {
         constructor(props) {
@@ -22,6 +23,7 @@ class tripList extends Component {
         componentDidMount() {
                 this.props.listTripAction();
               }
+        
 
   render() {
     const TripInfo = this.state.tripList;
@@ -30,9 +32,7 @@ class tripList extends Component {
                 <div className="card">
                         <div className="card-body">
                         <h5 className="card-title">{x}</h5>
-                        <div className="d-inline">
-                                <a href="#" className="btn btn-info">Explore</a>
-                        </div>
+                                <ExploreTrip tripID={x} />
                         <div className="d-inline">
                                 <DeleteTrip tripID={x}/>
                         </div>  
@@ -43,8 +43,8 @@ class tripList extends Component {
     const TripListComponent = (<div className="row py-2">
                                 {infoItems}
                                 </div>);
-    const Spinner = (<div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
+    const Spinner = (<div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
                      </div>);   
     var Lst;           
     if(this.state.loading){
@@ -71,7 +71,7 @@ tripList.propTypes = {
         loading: state.board.loading
       });
       
-      export default connect(mapStateToProps, { listTripAction })(withRouter(tripList));
+export default connect(mapStateToProps, { listTripAction })(withRouter(tripList));
 
 
 

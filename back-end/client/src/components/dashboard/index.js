@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 
@@ -22,8 +22,13 @@ class Dashboard extends Component {
     }
 
   render() {
+    if(this.props.tripName){
+      return (<Redirect to='/trip'/>);
+    }
+
+
     return (
-<   div>
+  <div>
       {/* Nav Bar */}
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4 sticky-top">
               <div className="container">
@@ -56,6 +61,9 @@ Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  tripName: state.trip.tripName
+});
 
 
-export default connect(null, { logoutUser })(withRouter(Dashboard));
+export default connect(mapStateToProps, { logoutUser })(withRouter(Dashboard));

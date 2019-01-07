@@ -20,7 +20,7 @@ router.get("/test", (err,res) => {
 //   2) Create new trip name by appending random number.
 //   3) Add trip
 // Input: {tripname:"brazil2019", tripDesc: "blah..."}
-// Output: {success:true}
+// Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
     const { errors, isValid } = validateAddTripInput(req.body);
@@ -64,7 +64,7 @@ router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req,
 //      a) tripname is non-empty.
 //      b) tripname exists.
 // Input: {tripname:"china:nucupi04a"}
-// Output: {success:true}
+// Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/join-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
     const { errors, isValid } = validateJoinTripInput(req.body);
@@ -134,7 +134,7 @@ router.post("/trips-list", passport.authenticate('jwt', { session: false }), (re
 // Route: api/trips/delete-trip
 // Description: 
 // Input: {tripname:"china:8jg7v25nv5"}
-// Output: {success:true}
+// Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
     console.log(req.body.tripname);
@@ -158,5 +158,11 @@ router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (r
                 })
         });
 });
+
+// Route: api/trips/get-desc
+// Description: Get 
+
+
+
 
 module.exports = router;
