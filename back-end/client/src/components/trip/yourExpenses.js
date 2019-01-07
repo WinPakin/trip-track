@@ -9,7 +9,6 @@ class yourExpenses extends Component {
         super(props);
         this.state = {otherEntity:"everyone"};
         this.handleChangeOtherEntity = this.handleChangeOtherEntity.bind(this);
-
     }
 
 handleChangeOtherEntity(event) {
