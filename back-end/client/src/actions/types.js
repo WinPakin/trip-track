@@ -8,14 +8,19 @@ export const GET_LIST_TRIP = 'GET_LIST_TRIP';
 export const GET_TRIP_LIST_LOADING = 'GET_TRIP_LIST_LOADING';
 // Trip Page actions
 
-// Name and Description
+// Name
 // Permission to go to trip page
 export const SET_CURR_TRIP_NAME = 'SET_CURR_TRIP_NAME';
 export const CLEAR_CURR_TRIP_NAME = 'CLEAR_CURR_TRIP_NAME';
 
+//Get members list
+export const GET_MEMBER_LIST = 'GET_MEMBER_LIST';
+export const GET_MEMBER_LIST_LOADING = 'GET_MEMBER_LIST_LOADING';
 
+// Description
 export const SET_CURR_TRIP_DESC = 'SET_CURR_TRIP_DESC';
 export const SET_CURR_TRIP_DESC_LOADING = 'SET_CURR_TRIP_DESC_LOADING';
+
 //Your Payments
 export const SET_YOUR_PAYMENT = 'SET_YOUR_PAYMENT';
 export const SET_YOUR_PAYMENT_LOADING = 'SET_YOUR_PAYMENT_LOADING ';

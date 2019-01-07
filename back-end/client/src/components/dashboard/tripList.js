@@ -7,26 +7,13 @@ import DeleteTrip from './deleteTrip';
 import ExploreTrip from './explore';
 
 class tripList extends Component {
-        constructor(props) {
-                super(props);
-                this.state = {tripList: [],
-                              loading: false
-                };
-        }
-
-        componentWillReceiveProps(nextProps) {        
-                this.setState({ tripList: nextProps.trip_list,
-                                loading: nextProps.loading                          
-                });
-        }
 
         componentDidMount() {
                 this.props.listTripAction();
               }
         
-
   render() {
-    const TripInfo = this.state.tripList;
+    const TripInfo = this.props.trip_list;
     const infoItems = TripInfo.map(x =>
         <div className="col-sm-4 py-1" key={JSON.stringify(x)}>
                 <div className="card">
@@ -47,7 +34,7 @@ class tripList extends Component {
                         <span className="sr-only">Loading...</span>
                      </div>);   
     var Lst;           
-    if(this.state.loading){
+    if(this.props.loading){
         Lst = Spinner;
     }else{
         Lst = TripListComponent; 

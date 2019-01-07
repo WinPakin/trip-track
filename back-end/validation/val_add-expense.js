@@ -14,6 +14,7 @@ module.exports = function validateAddExpenseInput(data) {
 
   data.expenseName = !isEmpty(data.expenseName) ? data.expenseName : '';
   data.chargeAmount = !isEmpty(data.chargeAmount) ? data.chargeAmount : '';
+  data.chargedPersons = !isEmpty(data.chargedPersons) ? data.chargedPersons : '';
   
 
   if (!Validator.isLength(data.expenseName, { min: 2, max: 20 })) {
@@ -21,17 +22,22 @@ module.exports = function validateAddExpenseInput(data) {
   }
 
   if (Validator.isEmpty(data.expenseName)) {
-    errors.expenseName = 'Expense name field is required';
+    errors.expenseName = 'Expense name field is required.';
   }
   if (/\s/.test(data.expenseName)) { 
-    errors.expenseName = 'Expense name cannot contain spaces';
+    errors.expenseName = 'Expense name cannot contain spaces.';
+  }
+  if (Validator.isEmpty(data.chargeAmount)) {
+    errors.chargeAmount = 'Charge Amount field is required.';
   }
 
   if (isNaN(data.chargeAmount)){
-      errors.chargeAmount = 'You charge amount must be a number'
+      errors.chargeAmount = 'Your charge amount must be a number.'
   }
 
-  // is positive
+  if (Validator.isEmpty(data.chargedPersons)) {
+    errors.chargedPersons = 'You must charge at least one person.';
+  }
 
 
 

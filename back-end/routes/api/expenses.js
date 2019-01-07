@@ -31,9 +31,11 @@ router.get("/test", (req, res) => {
 // Output: {success:true}
 // Access: Private
 router.post("/add-expense", passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log("create expense");
+    console.log(req.body);
     const { errors, isValid } = validateAddExpenseInput(req.body);
     if(!isValid){
-        res.status(400).json(errors);
+        return res.status(400).json(errors);
     }
 
     chargedList = req.body.chargedPersons.split('&');

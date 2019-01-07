@@ -1,22 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addExpenseAction  } from '../../actions/tripActions';
 
-export default class addExpense extends Component {
+//util functions
+const createChargedPersons  = (membersMap) => {
+    let keyLst = Object.keys(membersMap);
+    let chargedPersons = keyLst.filter( key => membersMap[key]);
+    return chargedPersons.join("&");
+    
+}
 
 
 
-constructor(props) {
+
+
+class addExpense extends Component {
+
+    constructor(props) {
         super(props);
         // loop add key/people to state.
         // Get names from props
         this.state = {expenseName: '',
                       chargeAmount: '',
                       chargeType: 'perPerson',
-                      chargedPersons: '',
-                      propMock: ["joe", "kim", "jim"],
+                      membersMap: null,
                       category: 'transport',
-                      joe: false,
-                      kim: false,
-                      jim: false
         };
         this.handleChangeExpenseName = this.handleChangeExpenseName.bind(this);
         this.handleChangeChargeAmount = this.handleChangeChargeAmount.bind(this);
@@ -44,20 +54,50 @@ handleChangeCategory(event){
 
 handleChangeChargedPerson(event){
     var keyName = event.target.value;
-    this.setState( (prevState, prop) => {return {[keyName] : !prevState[keyName]}});
-}
 
+    this.setState( (prevState, prop) => {
+        let prevMembersMap = prevState.membersMap;
+        prevMembersMap[keyName] = !prevMembersMap[keyName];
+        return { membersMap:prevMembersMap };
+    });
+}
+//      {
+//      tripname: "china:b3y4ufgckd",
+//      chargeAmount: 50,
+//      chargeType: "perPerson",
+//      chargedPersons: emily&joe, # & is the divider
+//      category: "food",
+//      expenseName: "Ramen"
+//      }
 handleSubmit(event) {
-    alert('Event Added: ' + JSON.stringify(this.state));
+    const expenseItem = {
+        tripname: this.props.tripName,
+        chargeAmount: this.state.chargeAmount,
+        chargeType: this.state.chargeType,
+        chargedPersons: createChargedPersons(this.state.membersMap),
+        category: this.state.category,
+        expenseName: this.state.expenseName
+
+
+
+    };
+    this.props.addExpenseAction(expenseItem);
     event.preventDefault();
+    }
+
+    componentDidMount(){
+        const membersMap = {};
+        this.props.tripMembers.map( member => {membersMap[member] = false});
+        this.setState({membersMap:membersMap});
     }
 
 
 
   render() {
-    // Get memrLst from Props
-    const memberLst = ["joe", "kim", "jim"];
-    const MemberLst = memberLst.map( personName => 
+    const { errors } = this.props;
+
+
+    const MemberLst = this.props.tripMembers.map( personName => 
         <div className="form-check" key={personName}>
         <input className="form-check-input" type="checkbox" id={personName} value={personName}
         onChange={this.handleChangeChargedPerson}
@@ -77,7 +117,9 @@ handleSubmit(event) {
                     <label htmlFor="expenseName" className="col-sm-2 col-form-label">Expense Name</label>
                     <div className="col-sm-10">
                     <input type="text" className="form-control" id="ExpenseName" placeholder="Ticket to Sao Paulo" value={this.state.expenseName} onChange={this.handleChangeExpenseName}/>
+                    { errors.expenseName && <div className="invalid-feedback d-block">{errors.expenseName}</div>}
                     </div>
+
                 </div>
         </form>
         <form>
@@ -86,6 +128,7 @@ handleSubmit(event) {
                     <label htmlFor="expenseAmount" className="col-sm-2 col-form-label">Expense Amount</label>
                     <div className="col-sm-10">
                     <input type="number" className="form-control" id="expenseAmount" placeholder="100" value={this.state.chargeAmount} onChange={this.handleChangeChargeAmount}/>
+                    { errors.chargeAmount && <div className="invalid-feedback d-block">{errors.chargeAmount}</div>}
                     </div>
                 </div>
         </form>
@@ -117,7 +160,9 @@ handleSubmit(event) {
                     <div className="col-sm-2">People Involved</div>
                     <div className="col-sm-10">
                         {MemberLst}
+                        { errors.chargedPersons && <div className="invalid-feedback d-block">{errors.chargedPersons}</div>}
                     </div>
+                   
                 </div>
         </form>
         <form>
@@ -171,4 +216,15 @@ handleSubmit(event) {
   }
 }
 
+addExpense.propTypes = {
+    addExpenseAction: PropTypes.func.isRequired
+  };
 
+  const mapStateToProps = state => ({
+    tripName: state.trip.tripName,
+    tripMembers: state.trip.tripMembers,
+    errors: state.errors
+    
+  });
+  
+  export default connect(mapStateToProps, { addExpenseAction })(withRouter(addExpense));

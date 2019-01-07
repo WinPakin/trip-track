@@ -25,8 +25,6 @@ router.get("/test", (err,res) => {
 router.post("/add-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
     const { errors, isValid } = validateAddTripInput(req.body);
     // Check Validation
-    console.log("Add Trip");
-    console.log(errors);
     if (!isValid) {
         return res.status(400).json(errors);
     }
@@ -137,7 +135,6 @@ router.post("/trips-list", passport.authenticate('jwt', { session: false }), (re
 // Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log(req.body.tripname);
     Trip.findOne({tripname:req.body.tripname})
         .then( trip => {
             trip.members.splice(trip.members.indexOf(req.user.username), 1);
@@ -160,7 +157,28 @@ router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (r
 });
 
 // Route: api/trips/get-desc
-// Description: Get 
+// Description: Get Trip Description of a given trip name
+// input: {tripname:"china:8jg7v25nv5"}
+// output: {tripDesc: "Going to the Wall"}
+router.post("/get-desc", passport.authenticate('jwt', { session: false}), (req, res) => {
+    Trip.findOne({tripname:req.body.tripname})
+        .then( trip => {
+            res.json({tripDesc:trip.tripDesc});
+        }).catch( err => {console.log(err);});
+
+});
+
+// Route: api/trips/get-members
+// Description: Get Member List of a given trip name
+// input: {tripname:"china:8jg7v25nv5"}
+// output: {memberLst: ["joe", "emily"]}
+router.post("/get-members", passport.authenticate('jwt', { session: false}), (req, res) => {
+    Trip.findOne({tripname:req.body.tripname})
+        .then( trip => {
+            res.json({ memberLst: trip.members});
+        }).catch( err => {console.log(err);});
+});
+
 
 
 
