@@ -39,3 +39,5 @@ Used Bootstrap.
 React and React-Redux to manage states. 
 ### Testing:
 Redux testing was done by using Redux-DevTools.
+
+# Image collage created using Befunky
