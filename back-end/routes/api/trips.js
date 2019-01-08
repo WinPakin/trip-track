@@ -131,30 +131,26 @@ router.post("/trips-list", passport.authenticate('jwt', { session: false }), (re
 
 // Route: api/trips/delete-trip
 // Description: 
+//              1) Remove trip from User's trips, 
+//              2) User is still a member of that trip.
 // Input: {tripname:"china:8jg7v25nv5"}
 // Output: ex) {tripList:["Brazil_May_2019:AZ&^65B", Japan_June_2018:HF&%FHA"]}
 // Access: Private
 router.post("/delete-trip", passport.authenticate('jwt', { session: false }), (req, res) => {
-    Trip.findOne({tripname:req.body.tripname})
-        .then( trip => {
-            trip.members.splice(trip.members.indexOf(req.user.username), 1);
-            trip.save()
-                .then( trip => {
-                    User.findOne({username:req.user.username})
-                    .then( user => {
-                        user.tripnames.splice(user.tripnames.indexOf(req.body.tripname),1);
-                        user.save()
-                            .then( () => {
-                                tripListForUser(req.user.username, res);;
-                            } 
-                            )       
-                    }
-                    ).catch(err => {
-                        console.log(err);
-                    })
-                })
-        });
+        User.findOne({username:req.user.username})
+        .then( user => {
+            user.tripnames.splice(user.tripnames.indexOf(req.body.tripname),1);
+            user.save()
+                .then( () => {
+                    tripListForUser(req.user.username, res);;
+                } 
+                )       
+        }
+        ).catch(err => {
+            console.log(err);
+        })
 });
+
 
 // Route: api/trips/get-desc
 // Description: Get Trip Description of a given trip name

@@ -9,6 +9,7 @@ class yourExpenses extends Component {
         super(props);
         this.state = {otherEntity:"everyone"};
         this.handleChangeOtherEntity = this.handleChangeOtherEntity.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
 handleChangeOtherEntity(event) {
@@ -25,19 +26,19 @@ handleChangeOtherEntity(event) {
         this.props.getYourExpenses(tripItem);
     }
 
-handleRefresh(){
+handleRefresh(event){
+    event.preventDefault();
     let tripItem = {
         otherEntity: this.state.otherEntity,
         tripname: this.props.tripName
     }
     this.props.getYourExpenses(tripItem);
+    
 }
 
   render() {
-    // const memberLst = ["Doe", "Emily", "Lee"];
     const memberLst = this.props.tripMembers;
     const memberOption = memberLst.map(name => <option value={name} key={name}>{name}</option>);
-    // const expenseLst = [{personName:"Mark", amount:70, expenseName:"NYC Bus"}, {personName:"Joe", amount:10, expenseName:"Ramen"}];
     const expenseLst = this.props.yourExpenseLst;
     const ExpenseLst = expenseLst.map( ex =>                     
         <tr key={JSON.stringify(ex)}>
@@ -64,7 +65,11 @@ handleRefresh(){
     if(this.props.yourExpenseLstLoading){
         MainComp = Spinner;
     }else{
-        MainComp = ExpenseTable;
+        if(this.props.yourExpenseLst.length == 0){
+            MainComp = <p><strong>Your expense list for this entity is empty.</strong></p>
+        }else{
+            MainComp = ExpenseTable;
+        }
     }
 
 

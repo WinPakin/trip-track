@@ -4,6 +4,9 @@ import { SET_CURR_TRIP_DESC, SET_CURR_TRIP_DESC_LOADING} from './types';
 import { GET_MEMBER_LIST, GET_MEMBER_LIST_LOADING} from './types';
 import { GET_ERRORS, CLEAR_ERRORS } from './types';
 import { SET_YOUR_PAYMENT, SET_YOUR_PAYMENT_LOADING} from './types';
+import { SET_YOUR_DEBT, SET_YOUR_DEBT_LOADING} from './types';
+import { SET_NET_PAYMENT, SET_NET_PAYMENT_LOADING} from './types';
+import { SET_ANALYTICS, SET_ANALYTICS_LOADING} from './types';
 
 // Set Name
 export const setTripName = (tripName) => (dispatch) => {
@@ -91,6 +94,50 @@ export const getYourExpenses = (tripItem) => (dispatch) => {
                     })
         }).catch( err => {
             console.log(err);
-        });
-    
+        }); 
+}
+
+//Get Your Debt
+export const getYourDebt = (tripItem) => (dispatch) => {
+    dispatch(setLoading(SET_YOUR_DEBT_LOADING));
+    axios
+        .post('http://localhost:5000/api/expenses/debt-to', tripItem)
+        .then( res => {
+                    dispatch({
+                        type: SET_YOUR_DEBT,
+                        payload: res.data
+                    })
+        }).catch( err => {
+            console.log(err);
+        }); 
+}
+
+// Get Net Payments
+export const getNetPayment = (tripItem) => (dispatch) => {
+    dispatch(setLoading(SET_NET_PAYMENT_LOADING));
+    axios
+        .post('http://localhost:5000/api/expenses/net-payment', tripItem)
+        .then( res => {
+                    dispatch({
+                        type: SET_NET_PAYMENT,
+                        payload: res.data
+                    })
+        }).catch( err => {
+            console.log(err);
+        }); 
+}
+
+// Get Net Payments
+export const getAnalytics = (tripItem) => (dispatch) => {
+    dispatch(setLoading(SET_ANALYTICS_LOADING));
+    axios
+        .post('http://localhost:5000/api/expenses/analytics', tripItem)
+        .then( res => {
+                    dispatch({
+                        type: SET_ANALYTICS,
+                        payload: res.data
+                    })
+        }).catch( err => {
+            console.log(err);
+        }); 
 }

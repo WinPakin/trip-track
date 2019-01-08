@@ -105,7 +105,6 @@ class TripIndex extends Component {
                  <a href="#yourDebt">Your Debt</a>
                  <a href="#netPayments">Net Payments</a>
                  <a href="#analytics">Analytics</a>
-                 <a href="#delete">Delete</a>
       </div>
       <div className="main">
          <div className="container mx-4">
