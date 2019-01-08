@@ -68,10 +68,6 @@ import { connect } from 'react-redux';
           }
           
           handleSubmitLogin(event) {
-            // alert('Login was submitted: ' + JSON.stringify(this.state));
-            // axios.get('http://localhost:5000/api/users/test',this.state).then( res => {
-            //     console.log(res);
-            // }).catch(err => {console.log(err)});
             event.preventDefault();
             const newUser = {
                 username: this.state.username,
