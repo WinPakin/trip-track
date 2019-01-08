@@ -9,7 +9,7 @@ All you have to do is create a new trip or join a trip that your friend had alre
 
 # Backend:
 
-![alt text](./photos/backEndPic.jpg =500x)
+![](./photos/backEndPic.jpg =500x)
 ### Load Balancer: 
 NGINX reverse proxy is used to balance traffic between two servers running on two different Digital Ocean machines. 
 
@@ -30,7 +30,7 @@ API tests were conducted using Postman.
 
 # Frontend: 
 
-![alt text](./photos/frontEndPic.jpg =500x)
+![](./photos/frontEndPic.jpg =500x)
 
 ### Style and Layout:
 Used Bootstrap. 
