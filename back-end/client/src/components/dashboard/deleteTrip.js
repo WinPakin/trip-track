@@ -58,8 +58,5 @@ deleteTrip.propTypes = {
     tripID: PropTypes.string.isRequired,
   };
   
-  const mapStateToProps = state => ({
-    errors: state.errors
-  });
   
-  export default connect(null, { deleteTripAction })(withRouter(deleteTrip));
+export default connect(null, { deleteTripAction })(withRouter(deleteTrip));

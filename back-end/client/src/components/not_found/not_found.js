@@ -3,8 +3,8 @@ import {Link} from "react-router-dom";
 
 // css style
 var imgStyle = {
-  maxWidth:500,
-  maxHeight:500
+  maxWidth:350,
+  maxHeight:350
 }
 
 export default function not_found() {
@@ -22,8 +22,8 @@ export default function not_found() {
             </div>
           </nav>
           <div className="container mx-4">
-            <img style={imgStyle} src="./grass.jpg" alt="Responsive image"></img>
-            <img style={imgStyle} src="./beach.jpg" alt="Responsive image"></img>
+            <img style={imgStyle} src="./grass.jpg" alt="grass field"></img>
+            <img style={imgStyle} src="./beach.jpg" alt="beach"></img>
             <h1 className="my-3">Link Not Found !</h1>
           </div>
           

@@ -42,11 +42,8 @@ class netPayment extends Component {
     const Spinner = (<div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                     </div>);
-    if(this.props.netPaymentLstLoading){
-        MainComp = Spinner;
-    }else{
-        MainComp = NetLst;
-    }
+
+    MainComp = (<tbody>{NetLst}</tbody>);
 
     return (
             <div>
@@ -63,10 +60,9 @@ class netPayment extends Component {
                         <th scope="col">Net Payment</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {MainComp}
-                    </tbody>
+                        {!this.props.netPaymentLstLoading && MainComp}
                 </table>
+                {this.props.netPaymentLstLoading && Spinner}
             </div>
     )
   }

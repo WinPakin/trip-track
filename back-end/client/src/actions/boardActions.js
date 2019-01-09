@@ -5,7 +5,7 @@ import { GET_ERRORS, CLEAR_ERRORS, GET_LIST_TRIP, GET_TRIP_LIST_LOADING } from '
 // Input: tripname, tripDesc
 export const addTrip = tripItem => dispatch => {
     axios
-        .post('http://localhost:5000/api/trips/add-trip',tripItem)
+        .post('api/trips/add-trip',tripItem)
         .then( res => {
             alert("Success: Your trip has been added.");
             dispatch({
@@ -28,7 +28,7 @@ export const addTrip = tripItem => dispatch => {
 // Input: tripname (with Appended ID)
 export const joinTrip = tripName => dispatch => {
     axios
-        .post('http://localhost:5000/api/trips/join-trip',tripName)
+        .post('api/trips/join-trip',tripName)
         .then( res => {
             alert("Success: You have joinded the trip.");
             dispatch({
@@ -51,7 +51,7 @@ export const joinTrip = tripName => dispatch => {
 export const listTripAction = () => dispatch => {
     dispatch(setTripListLoading());
     axios
-        .post('http://localhost:5000/api/trips/trips-list',null)
+        .post('api/trips/trips-list',null)
         .then( res => {
             dispatch({
                 type: GET_LIST_TRIP,
@@ -64,7 +64,7 @@ export const listTripAction = () => dispatch => {
 //Delete Trip
 export const deleteTripAction = (deleteItem) => dispatch => {
     axios
-        .post('http://localhost:5000/api/trips/delete-trip', deleteItem)
+        .post('api/trips/delete-trip', deleteItem)
         .then( res => {
             dispatch({
                 type: GET_LIST_TRIP,

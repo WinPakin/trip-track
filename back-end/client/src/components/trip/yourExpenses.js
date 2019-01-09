@@ -65,7 +65,7 @@ handleRefresh(event){
     if(this.props.yourExpenseLstLoading){
         MainComp = Spinner;
     }else{
-        if(this.props.yourExpenseLst.length == 0){
+        if(this.props.yourExpenseLst.length === 0){
             MainComp = <p><strong>Your expense list for this entity is empty.</strong></p>
         }else{
             MainComp = ExpenseTable;

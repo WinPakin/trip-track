@@ -3,8 +3,8 @@ import {Link} from "react-router-dom";
 
 // css style
 var imgStyle = {
-  maxWidth:500,
-  maxHeight:500
+  maxWidth:350,
+  maxHeight:350
 }
 
 export default function about() {
@@ -32,7 +32,7 @@ export default function about() {
             </ol>
             <p>All you have to do is create a new trip or join a trip that your friend had already created and record expenses as you travel. Trip Track will take care of the rest.</p>
             <h1 className="border-bottom my-4">Backend</h1>
-            <img style={imgStyle} src="./backEndPic.jpg" alt="Responsive image"></img>
+            <img style={imgStyle} src="./backEndPic.jpg" alt="Backend Pic"></img>
             <p><strong>Load Balancer:</strong> NGINX reverse proxy is used to balance traffic between two servers running on two different Digital Ocean machines.</p>
             <p><strong>Server and Routing:</strong> Node.js server is used with the Express middleware to handle routes.</p>
             <p><strong>Database:</strong> MongoDB is used with Mongoose as the driver. The database instance is hosted by MLab. </p>
@@ -40,7 +40,7 @@ export default function about() {
             <p><strong>Deployment:</strong> Servers are dockerized and deployed on Digital Ocean Cloud.</p>
             <p><strong>Testing:</strong> API tests were conducted using Postman.</p>
             <h1 className="border-bottom my-4">Frontend</h1>
-            <img style={imgStyle} src="./frontEndPic.jpg" alt="Responsive image"></img>
+            <img style={imgStyle} src="./frontEndPic.jpg" alt="Frontend Pic"></img>
             <p><strong>Style and Layout:</strong> Used Bootstrap.</p>
             <p><strong>Framework:</strong> React and React-Redux to manage states.</p>
             <p><strong>Testing:</strong> Redux testing was done by using Redux-DevTools.</p>

@@ -34,7 +34,7 @@ export const setLoading = (action_loading) => {
 export const getTripDesc = (tripName) => (dispatch) => {
     dispatch(setLoading(SET_CURR_TRIP_DESC_LOADING));
     axios
-         .post('http://localhost:5000/api/trips/get-desc', tripName)
+         .post('api/trips/get-desc', tripName)
          .then( res => {
                     dispatch({
                         type: SET_CURR_TRIP_DESC,
@@ -49,7 +49,7 @@ export const getTripDesc = (tripName) => (dispatch) => {
 export const getMembers = (tripName) => (dispatch) => {
     dispatch(setLoading(GET_MEMBER_LIST_LOADING));
     axios
-        .post('http://localhost:5000/api/trips/get-members', tripName)
+        .post('api/trips/get-members', tripName)
         .then( res => {
                     dispatch({
                         type: GET_MEMBER_LIST,
@@ -66,7 +66,7 @@ export const getMembers = (tripName) => (dispatch) => {
 // Add Expense
 export const addExpenseAction = (expenseItem) => (dispatch) => {
     axios
-        .post('http://localhost:5000/api/expenses/add-expense', expenseItem)
+        .post('api/expenses/add-expense', expenseItem)
         .then( res => {
             alert("SUCCESS: Your Expense has been added.");
             dispatch({
@@ -86,7 +86,7 @@ export const addExpenseAction = (expenseItem) => (dispatch) => {
 export const getYourExpenses = (tripItem) => (dispatch) => {
     dispatch(setLoading(SET_YOUR_PAYMENT_LOADING));
     axios
-        .post('http://localhost:5000/api/expenses/expense-for', tripItem)
+        .post('api/expenses/expense-for', tripItem)
         .then( res => {
                     dispatch({
                         type: SET_YOUR_PAYMENT,
@@ -101,7 +101,7 @@ export const getYourExpenses = (tripItem) => (dispatch) => {
 export const getYourDebt = (tripItem) => (dispatch) => {
     dispatch(setLoading(SET_YOUR_DEBT_LOADING));
     axios
-        .post('http://localhost:5000/api/expenses/debt-to', tripItem)
+        .post('api/expenses/debt-to', tripItem)
         .then( res => {
                     dispatch({
                         type: SET_YOUR_DEBT,
@@ -116,7 +116,7 @@ export const getYourDebt = (tripItem) => (dispatch) => {
 export const getNetPayment = (tripItem) => (dispatch) => {
     dispatch(setLoading(SET_NET_PAYMENT_LOADING));
     axios
-        .post('http://localhost:5000/api/expenses/net-payment', tripItem)
+        .post('api/expenses/net-payment', tripItem)
         .then( res => {
                     dispatch({
                         type: SET_NET_PAYMENT,
@@ -131,7 +131,7 @@ export const getNetPayment = (tripItem) => (dispatch) => {
 export const getAnalytics = (tripItem) => (dispatch) => {
     dispatch(setLoading(SET_ANALYTICS_LOADING));
     axios
-        .post('http://localhost:5000/api/expenses/analytics', tripItem)
+        .post('api/expenses/analytics', tripItem)
         .then( res => {
                     dispatch({
                         type: SET_ANALYTICS,

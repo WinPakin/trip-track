@@ -15,8 +15,8 @@ import { clearTripName, getMembers } from '../../actions/tripActions';
 
 // css style
 var imgStyle = {
-  maxWidth:500,
-  maxHeight:500
+  maxWidth:350,
+  maxHeight:350
 }
 
 class TripIndex extends Component {
@@ -57,8 +57,8 @@ class TripIndex extends Component {
     </div>);
     const Info = (
       <div>
-          <img style={imgStyle} src="./grass.jpg" alt="Responsive image"></img>
-          <img style={imgStyle} src="./beach.jpg" alt="Responsive image"></img>
+          <img style={imgStyle} src="./grass.jpg" alt="grass"></img>
+          <img style={imgStyle} src="./beach.jpg" alt="beach"></img>
            {/* Description */}
            <Description/>
            {/* Add Expense */}
@@ -88,10 +88,10 @@ class TripIndex extends Component {
                  <a className="navbar-brand" href="/trip">{this.props.tripName}</a>
                  <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <a className="nav-link" onClick={this.handleToDashBoard}>Dash Board</a>
+                        <div className="nav-link" onClick={this.handleToDashBoard}>Dash Board</div>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" onClick={this.handleLogout}>Log Out</a>
+                        <div className="nav-link" onClick={this.handleLogout}>Log Out</div>
                     </li>
                  </ul>
              </div>

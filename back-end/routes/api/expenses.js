@@ -39,12 +39,9 @@ router.post("/add-expense", passport.authenticate('jwt', { session: false }), (r
     chargedList = req.body.chargedPersons.split('&');
     var chargeAmount;
     if(req.body.chargeType == "perPerson"){
-        console.log("perPerson");
         chargeAmount = req.body.chargeAmount;
     }else{
-        console.log("divided");
         chargeAmount = req.body.chargeAmount / chargedList.length;
-        console.log(chargeAmount);
     }
     // charges everyone in chargedList
     for(var i = 0; i < chargedList.length; i ++){
@@ -142,9 +139,7 @@ router.post("/net-payment", passport.authenticate('jwt', { session: false }), (r
         .then( trip => {
             async function calcLogic() {
                 // init nested list
-                console.log(trip.members);
-                var netPaymentLst = trip.members.map(x => {return [x,{personName:x, yourExpense:0, yourDebt: 0, netPayment:0}];})
-                console.log(netPaymentLst);
+                var netPaymentLst = trip.members.map(x => {return [x,{personName:x, yourExpense:0, yourDebt: 0, netPayment:0}];});
                 // dict with: person name as key
                 var netPaymentDic = Lodash.fromPairs(netPaymentLst);
                                

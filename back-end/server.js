@@ -7,7 +7,8 @@ const users = require("./routes/api/users.js");
 const trips = require("./routes/api/trips.js");
 const expenses = require("./routes/api/expenses.js");
 const db_drive = require("./config/keys.js").mongoURL;
-const cors = require('cors')
+const cors = require('cors');
+const path = require('path');
 
 
 
@@ -18,6 +19,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// for PRODUCTION 
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Connecting to Database
 mongoose.connect(db_drive, { useNewUrlParser: true });
@@ -32,10 +37,19 @@ db.once('open', function() {
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
+
+
 // Routes
 app.use('/api/users', users);
 app.use('/api/trips', trips);
 app.use('/api/expenses', expenses);
+
+// for PRODUCTION 
+// Make routes know how to get to index.html.
+// Should be below all other endpoints.
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 const port = 5000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

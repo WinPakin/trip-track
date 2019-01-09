@@ -66,7 +66,7 @@ this.props.getYourDebt(tripItem);
     if(this.props.yourDebtLstLoading){
         MainComp = Spinner;
     }else{
-        if(this.props.yourDebtLst.length == 0){
+        if(this.props.yourDebtLst.length === 0){
             MainComp = <p><strong>Your debt list for this entity is empty.</strong></p>
         }else{
             MainComp = DebtTable;

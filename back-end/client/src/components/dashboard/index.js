@@ -39,7 +39,7 @@ class Dashboard extends Component {
                     <Link className="nav-link"  to="/about">About Us</Link>
                     </li>
                   <li className="nav-item">
-                      <a className="nav-link" onClick={this.handleLogout}>Log Out</a>
+                      <div className="nav-link" onClick={this.handleLogout}>Log Out</div>
                   </li>
                   </ul>
               </div>
