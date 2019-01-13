@@ -10,19 +10,12 @@ class addTrip extends Component {
   constructor(props) {
     super(props);
     this.state = {tripName: '',
-                  tripDesc: '', 
-                  errors: {}
+                  tripDesc: ''
                 };
 
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   handleChangeName(event) {
@@ -46,7 +39,7 @@ class addTrip extends Component {
 
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
 
     return (
       <div className="col-sm card mx-3 py-3">

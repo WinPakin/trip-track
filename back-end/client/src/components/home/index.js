@@ -10,8 +10,7 @@ import { connect } from 'react-redux';
         super(props);
         this.state = {username: '',
                       password1: '',
-                      password2: '',
-                      errors: {}
+                      password2: ''
         };
         
 
@@ -34,14 +33,6 @@ import { connect } from 'react-redux';
             }
           }
         
-          componentWillReceiveProps(nextProps) {
-            if (nextProps.errors) {
-              this.setState({ errors: nextProps.errors });
-            }
-          }
-
-
-
         handleChangeUsername(event) {
             this.setState({username: event.target.value});
           }
@@ -85,7 +76,7 @@ import { connect } from 'react-redux';
 
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     return (
         <div>
         {/* Nav Bar */}

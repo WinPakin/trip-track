@@ -7,18 +7,10 @@ import { joinTrip as joinTripAction } from '../../actions/boardActions';
 class joinTrip extends Component {
   constructor(props) {
     super(props);
-    this.state = {tripID: '',
-                  errors: {}                
-                  };
+    this.state = {tripID: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   handleChange(event) {
@@ -35,7 +27,7 @@ class joinTrip extends Component {
 
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     return (
       <div className="col-sm card mx-3 py-3">
       <h1 className="border-bottom">Join Trip</h1>
